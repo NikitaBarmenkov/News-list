@@ -1,9 +1,51 @@
-.container {
+.main_container {
   margin: 0 auto;
   min-height: 100vh;
+  min-width: 320px;
   background-color: #FBFBFB;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
+}
+
+.main_content {
+  width: 76%;
+  margin-top: 36px;
+  min-height: 100vh;
+}
+
+.font_arial {
+  font-family: Arial;
+  font-style: normal;
+}
+
+.underline {
+  text-decoration-line: underline;
+}
+
+a {
+  cursor: pointer;
+}
+
+.color_blue {
+  color: #0029FF;
+}
+
+.color_black {
+  color: #000000;
+}
+
+.box_shadow {
+  background: #FFFFFF;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.05);
+  border-radius: 3px;
+}
+
+@media only screen and (max-width: 980px) {
+  .main_content {
+    width: 90%;
+    margin-top: 36px;
+    min-height: 100vh;
+  }
 }

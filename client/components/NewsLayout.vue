@@ -1,0 +1,67 @@
+<template>
+  <div class="box_shadow font_arial" :class="changeNewsLayoutClass()">
+    <div class="news_body">
+      <div :class="changeNewsWrapContent()">
+        <img :class="changeNewsImage()" :src="news.image">
+        <div class="news_text_content">
+          <p class="color_blue news_title">
+            {{ news.title }}
+          </p>
+          <p class="color_black news_description">
+            {{ news.description }}
+          </p>
+          <a class="news_more underline">
+            Подробнее
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="news_footer">
+      <div class="footer_content">
+        <p class="underline">
+          www.lenta.ru
+        </p>
+        <p>
+          {{ news.date.toLocaleDateString() }}
+        </p>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script lang="ts">
+import Vue from 'vue';
+
+export default Vue.extend({
+  props: {
+    news: {
+      type: Object,
+      required: true,
+    },
+    mode: {
+      type: String,
+      required: true,
+    },
+  },
+  methods: {
+    changeNewsLayoutClass() {
+      if (this.mode === 'list') {
+        return 'layout_list';
+      }
+      return 'layout_grid';
+    },
+    changeNewsWrapContent() {
+      if (this.mode === 'list') {
+        return 'news_wrap_content_list';
+      }
+      return 'news_wrap_content_grid';
+    },
+    changeNewsImage() {
+      if (this.mode === 'list') {
+        return 'news_image_list';
+      }
+      return 'news_image_grid';
+    },
+  },
+});
+</script>
