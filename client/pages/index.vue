@@ -13,7 +13,12 @@
           </div>
         </div>
         <div class="search_block box_shadow">
-          <input class="input" type="text">
+          <input
+            v-model="options.searchText"
+            class="input"
+            type="text"
+            @input="handleSearchTextChange()"
+          >
           <div class="search_icon">
             <a>
               <img src="../assets/images/search.svg">
@@ -111,7 +116,8 @@ export default Vue.extend({
     },
     async serverRequest() {
       const response = await this.$axios.$post('https://localhost:3001/api/news', this.options);
-      this.news = response;
+      this.news = response.data;
+      this.max = response.pages;
     },
   },
 });
