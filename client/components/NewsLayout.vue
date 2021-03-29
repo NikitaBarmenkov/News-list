@@ -4,7 +4,7 @@
       <div :class="changeNewsWrapContent()">
         <img :class="changeNewsImage()" :src="news.image">
         <div class="news_text_content">
-          <p class="color_blue news_title">
+          <p class="color_blue news_title" @click="OpenNews()">
             {{ news.title }}
           </p>
           <p class="color_black news_description">
@@ -44,6 +44,9 @@ export default Vue.extend({
     },
   },
   methods: {
+    OpenNews() {
+      window.open(this.news.link, '_blank');
+    },
     changeNewsLayoutClass() {
       if (this.mode === 'list') {
         return 'layout_list';

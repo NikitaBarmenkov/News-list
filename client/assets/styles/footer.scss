@@ -8,11 +8,12 @@
     line-height: 21px;
 }
 
-.horizontal_pagination {
-    list-style: none;
+.page_navigation_container {
+    display: flex;
+    justify-content: center;
 }
 
-.horizontal_pagination li {
-    display: inline;
-    margin-right: 10px;
+.page_navigation_container input {
+    width: 100px;
+    border: 1px solid #0029FF;
 }

@@ -45,17 +45,14 @@
         </div>
       </div>
       <div class="news_container">
-        <Layout v-for="n in news" :key="n.title" :news="n" :mode="mode" />
+        <Layout v-for="n in news" :key="n.title" :news="n" :mode="options.mode" />
       </div>
       <div class="footer_container">
-        <ul class="horizontal_pagination">
-          <li><a>1</a></li>
-          <li><a>2</a></li>
-          <li><a class="current">3</a></li>
-          <li><a>4</a></li>
-          <li><span>...</span></li>
-          <li><a>200</a></li>
-        </ul>
+        <div class="page_navigation_container">
+          <p>1...</p>
+          <input v-model="options.page_number" type="number" min="1" :max="max" @input="setPage()">
+          <p>...{{ max }}</p>
+        </div>
       </div>
     </div>
   </div>
@@ -69,19 +66,20 @@ export default Vue.extend({
   components: { Layout },
   data() {
     return {
-      mode: 'list',
+      options: {
+        source: 'all',
+        mode: 'list',
+        page_number: 1,
+        searchText: '',
+      },
+      max: 6,
       news: [
         {
           title: 'Московские хордовые магистрали планируют достроить к 2023 году',
           description: 'В новый транспортный каркас столицы войдут Северо-Западная хорда, Северо-Восточная хорда, Южная рокада и Юго-Восточная хорда.',
           date: new Date('Sun, 28 Mar 2021 10:04:00 +0300'),
           image: 'https://www.mos.ru/upload/newsfeed/pressevents/F_mSFgGnMh7e(1).jpg',
-        },
-        {
-          title: 'Московские хордовые магистрали планируют достроить к 2023 году',
-          description: 'В новый транспортный каркас столицы войдут Северо-Западная хорда, Северо-Восточная хорда, Южная рокада и Юго-Восточная хорда.',
-          date: new Date('Sun, 28 Mar 2021 10:04:00 +0300'),
-          image: 'https://www.mos.ru/upload/newsfeed/pressevents/F_mSFgGnMh7e(1).jpg',
+          link: 'https://www.mos.ru/news/item/88506073/',
         },
       ],
     };
@@ -91,7 +89,10 @@ export default Vue.extend({
       alert(filter);
     },
     setMode(value: string) {
-      this.mode = value;
+      this.options.mode = value;
+    },
+    setPage() {
+      alert(this.options.page_number);
     },
     refresh() {
       alert('refresh');
