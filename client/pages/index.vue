@@ -25,13 +25,13 @@
         <div class="decorate_line" />
         <div class="filters_container font_arial">
           <div class="source_container color_blue text_filters">
-            <a @click="setFilter('all')">
+            <a @click="setSource('all')">
               Все
             </a>
-            <a @click="setFilter('lenta')">
+            <a @click="setSource('lenta')">
               Lenta.ru
             </a>
-            <a @click="setFilter('mos')">
+            <a @click="setSource('mos')">
               Mos.ru
             </a>
           </div>
@@ -45,12 +45,18 @@
         </div>
       </div>
       <div class="news_container">
-        <Layout v-for="n in news" :key="n.title" :news="n" :mode="options.mode" />
+        <Layout v-for="n in news" :key="n.title" :news="n" :mode="mode" />
       </div>
       <div class="footer_container">
         <div class="page_navigation_container">
           <p>1...</p>
-          <input v-model="options.page_number" type="number" min="1" :max="max" @input="setPage()">
+          <input
+            v-model="options.page"
+            type="number"
+            min="1"
+            :max="max"
+            @input="handlePageChange()"
+          >
           <p>...{{ max }}</p>
         </div>
       </div>
@@ -67,35 +73,45 @@ export default Vue.extend({
   data() {
     return {
       options: {
-        source: 'all',
-        mode: 'list',
-        page_number: 1,
+        source: 'mos',
         searchText: '',
+        page: 1,
+        newsPerPage: 4,
       },
+      mode: 'list',
       max: 6,
-      news: [
-        {
-          title: 'Московские хордовые магистрали планируют достроить к 2023 году',
-          description: 'В новый транспортный каркас столицы войдут Северо-Западная хорда, Северо-Восточная хорда, Южная рокада и Юго-Восточная хорда.',
-          date: new Date('Sun, 28 Mar 2021 10:04:00 +0300'),
-          image: 'https://www.mos.ru/upload/newsfeed/pressevents/F_mSFgGnMh7e(1).jpg',
-          link: 'https://www.mos.ru/news/item/88506073/',
-        },
-      ],
+      news: [],
     };
   },
+  created() {
+    this.serverRequest();
+  },
   methods: {
-    setFilter(filter: string) {
-      alert(filter);
+    setSource(source: string) {
+      this.options.source = source;
+      this.options.page = 1;
+      this.serverRequest();
     },
     setMode(value: string) {
-      this.options.mode = value;
+      this.mode = value;
+      this.options.newsPerPage = value === 'grid' ? 4 : 3;
+      this.options.page = 1;
+      this.serverRequest();
     },
-    setPage() {
-      alert(this.options.page_number);
+    handlePageChange() {
+      this.serverRequest();
     },
     refresh() {
-      alert('refresh');
+      this.options.page = 1;
+      this.serverRequest();
+    },
+    handleSearchTextChange() {
+      this.options.page = 1;
+      this.serverRequest();
+    },
+    async serverRequest() {
+      const response = await this.$axios.$post('https://localhost:3001/api/news', this.options);
+      this.news = response;
     },
   },
 });

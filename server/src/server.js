@@ -3,15 +3,14 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const cors = require('cors');
+const router = require('./router');
 
 const port = 3001;
 
 const app = express();
 app.use(cors());
-
-app.get('/api/news', (req, res) => {
-  res.json({ message: 'test' });
-});
+app.use(express.json());
+app.use('/api', router);
 
 spdy
   .createServer({

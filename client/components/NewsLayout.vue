@@ -19,10 +19,10 @@
     <div class="news_footer">
       <div class="footer_content">
         <p class="underline">
-          www.lenta.ru
+          {{ news.source }}
         </p>
         <p>
-          {{ news.date.toLocaleDateString() }}
+          {{ news.date.toString() }}
         </p>
       </div>
     </div>
