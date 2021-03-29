@@ -9,7 +9,7 @@ const port = 3001;
 const app = express();
 app.use(cors());
 
-app.get('/', (req, res) => {
+app.get('/api/news', (req, res) => {
   res.json({ message: 'test' });
 });
 
