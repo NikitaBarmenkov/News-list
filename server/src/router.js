@@ -22,12 +22,12 @@ function searcHandler(news, searchText) {
   const lowerCaseSearchText = searchText.toLowerCase();
   let res = [];
 
-  if (news.title && news.description) {
-    res = news.filter((oneNews) => oneNews.title.toLowerCase().includes(lowerCaseSearchText)
-  || oneNews.description.toLowerCase().includes(lowerCaseSearchText));
-  } else if (!news.description) {
-    res = news.filter((oneNews) => oneNews.title.toLowerCase().includes(lowerCaseSearchText));
-  }
+  res = news.filter((oneNews) => {
+    if (!oneNews.description) {
+      return oneNews.title.toLowerCase().includes(lowerCaseSearchText);
+    } return oneNews.title.toLowerCase().includes(lowerCaseSearchText)
+      || oneNews.description.toLowerCase().includes(lowerCaseSearchText);
+  });
 
   return res;
 }
@@ -89,9 +89,10 @@ router.post('/news', (req, res, next) => {
       const filteredNews = searcHandler(news, options.searchText);
       const pages = Math.ceil(filteredNews.length / options.newsPerPage);
       news = getNewsOnPage(filteredNews, options.page, options.newsPerPage);
+      const sortedNews = news.sort((a, b) => b.date.getTime() - a.date.getTime());
 
       res.send({
-        data: news,
+        data: sortedNews,
         pages,
       });
     })();

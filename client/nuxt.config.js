@@ -18,7 +18,7 @@ export default {
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     '~/assets/styles/main.scss',
-    '~/assets/styles/top.scss',
+    '~/assets/styles/head.scss',
     '~/assets/styles/filters.scss',
     '~/assets/styles/news_block.scss',
     '~/assets/styles/footer.scss',

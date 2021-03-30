@@ -1,7 +1,7 @@
 <template>
   <div class="main_container">
     <div class="main_content">
-      <div class="head_container font_arial">
+      <div class="head_container">
         <div class="title_refresh_container">
           <p class="title_text">
             Список новостей
@@ -15,36 +15,34 @@
         <div class="search_block box_shadow">
           <input
             v-model="options.searchText"
-            class="input"
+            class="search_input"
             type="text"
             @input="handleSearchTextChange()"
           >
           <div class="search_icon">
-            <a>
-              <img src="../assets/images/search.svg">
-            </a>
+            <img src="../assets/images/search.svg">
           </div>
         </div>
       </div>
       <div class="control_container">
         <div class="decorate_line" />
-        <div class="filters_container font_arial">
-          <div class="source_container color_blue text_filters">
-            <a @click="setSource('all')">
+        <div class="filters_container">
+          <div class="source_container">
+            <a :class="filterColors[0]" @click="setSource('all')">
               Все
             </a>
-            <a @click="setSource('lenta')">
+            <a :class="filterColors[1]" @click="setSource('lenta')">
               Lenta.ru
             </a>
-            <a @click="setSource('mos')">
+            <a :class="filterColors[2]" @click="setSource('mos')">
               Mos.ru
             </a>
           </div>
           <div class="modes_container">
-            <input id="radioList" type="radio" name="radioMode" checked>
+            <input id="radioList" type="radio" name="radioMode">
             <label class="list_mode" for="radioList" @click="setMode('list')" />
 
-            <input id="radioGrid" type="radio" name="radioMode">
+            <input id="radioGrid" type="radio" name="radioMode" checked>
             <label class="grid_mode" for="radioGrid" @click="setMode('grid')" />
           </div>
         </div>
@@ -54,15 +52,17 @@
       </div>
       <div class="footer_container">
         <div class="page_navigation_container">
-          <p>1...</p>
-          <input
-            v-model="options.page"
-            type="number"
-            min="1"
-            :max="max"
-            @input="handlePageChange()"
-          >
-          <p>...{{ max }}</p>
+          <a @click="navigateLeft()">
+            <img src="../assets/images/arrow_left.svg">
+          </a>
+          <div>
+            {{ options.page }}
+          </div>
+          <a @click="navigateRight()">
+            <img src="../assets/images/arrow_right.svg">
+          </a>
+          <p>...</p>
+          <p>{{ max }}</p>
         </div>
       </div>
     </div>
@@ -78,13 +78,14 @@ export default Vue.extend({
   data() {
     return {
       options: {
-        source: 'mos',
+        source: 'all',
         searchText: '',
         page: 1,
-        newsPerPage: 3,
+        newsPerPage: 4,
       },
-      mode: 'list',
-      max: 6,
+      mode: 'grid',
+      filterColors: ['active_source', 'inactive_source', 'inactive_source'],
+      max: 1,
       news: [],
     };
   },
@@ -92,7 +93,26 @@ export default Vue.extend({
     this.serverRequest();
   },
   methods: {
+    navigateLeft() {
+      if (this.options.page - 1 < 1) {
+        this.options.page = 1;
+        return;
+      }
+      this.options.page -= 1;
+      this.serverRequest();
+    },
+    navigateRight() {
+      if (this.options.page + 1 > this.max) { 
+        this.options.page = this.max;
+        return;
+      }
+      this.options.page += 1;
+      this.serverRequest();
+    },
     setSource(source: string) {
+      if (source === 'all') this.filterColors = ['active_source', 'inactive_source', 'inactive_source'];
+      else if (source === 'lenta') this.filterColors = ['inactive_source', 'active_source', 'inactive_source'];
+      else this.filterColors = ['inactive_source', 'inactive_source', 'active_source'];
       this.options.source = source;
       this.options.page = 1;
       this.serverRequest();
@@ -101,9 +121,6 @@ export default Vue.extend({
       this.mode = value;
       this.options.newsPerPage = value === 'grid' ? 4 : 3;
       this.options.page = 1;
-      this.serverRequest();
-    },
-    handlePageChange() {
       this.serverRequest();
     },
     refresh() {

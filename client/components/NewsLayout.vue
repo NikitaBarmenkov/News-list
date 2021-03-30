@@ -1,16 +1,16 @@
 <template>
-  <div class="box_shadow font_arial" :class="changeNewsLayoutClass()">
+  <div class="box_shadow" :class="changeNewsLayoutClass()">
     <div class="news_body">
       <div :class="changeNewsWrapContent()">
         <img :class="changeNewsImage()" :src="news.image">
         <div class="news_text_content">
-          <p class="color_blue news_title" @click="OpenNews()">
+          <p class="news_title" @click="OpenNews()">
             {{ news.title }}
           </p>
-          <p class="color_black news_description">
+          <p class="news_description">
             {{ news.description }}
           </p>
-          <a class="news_more underline">
+          <a class="news_more">
             Подробнее
           </a>
         </div>
@@ -18,11 +18,14 @@
     </div>
     <div class="news_footer">
       <div class="footer_content">
-        <p class="underline">
+        <p class="news_source">
           {{ news.source }}
         </p>
-        <p>
-          {{ news.date.toString() }}
+        <p v-if="news.date">
+          {{ new Date(news.date).toLocaleDateString() }}
+        </p>
+        <p v-else>
+          no date
         </p>
       </div>
     </div>

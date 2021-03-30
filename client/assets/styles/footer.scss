@@ -1,19 +1,18 @@
 .footer_container {
-    margin-top: 50px;
-    margin-bottom: 48px;
+    margin-top: 30px;
+    margin-bottom: 50px;
     font-family: Arial;
     font-style: normal;
     font-weight: bold;
     font-size: 18px;
     line-height: 21px;
-}
-
-.page_navigation_container {
     display: flex;
     justify-content: center;
 }
 
-.page_navigation_container input {
-    width: 100px;
-    border: 1px solid #0029FF;
+.page_navigation_container {
+    width: 120px;
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
 }
