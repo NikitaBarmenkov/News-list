@@ -19,13 +19,17 @@ function SearcHandler(news, searchText) {
     return news;
   }
   const lowerCaseSearchText = searchText.toLowerCase();
-  return news.filter((oneNews) => oneNews.title.toLowerCase().includes(lowerCaseSearchText)
+  const res = news.filter((oneNews) => oneNews.title.toLowerCase().includes(lowerCaseSearchText)
   || oneNews.description.toLowerCase().includes(lowerCaseSearchText));
+  return res;
 }
 
 function getNewsOnPage(news, page, newsPerPage) {
-  const index = (page - 1) * newsPerPage;
-  return news.slice(index, index + newsPerPage);
+  if (news) {
+    const index = (page - 1) * newsPerPage;
+    return news.slice(index, index + newsPerPage);
+  }
+  return [];
 }
 
 router.post('/news', (req, res) => {
@@ -73,9 +77,9 @@ router.post('/news', (req, res) => {
       default:
     }
 
-    const pages = Math.ceil(news.length / options.newsPerPage);
-    const rrnews = SearcHandler(news, options.searchText);
-    if (news.length) news = getNewsOnPage(rrnews, options.page, options.newsPerPage);
+    const filteredNews = SearcHandler(news, options.searchText);
+    const pages = Math.ceil(filteredNews.length / options.newsPerPage);
+    news = getNewsOnPage(filteredNews, options.page, options.newsPerPage);
 
     res.send({
       data: news,

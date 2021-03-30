@@ -81,7 +81,7 @@ export default Vue.extend({
         source: 'mos',
         searchText: '',
         page: 1,
-        newsPerPage: 4,
+        newsPerPage: 3,
       },
       mode: 'list',
       max: 6,
