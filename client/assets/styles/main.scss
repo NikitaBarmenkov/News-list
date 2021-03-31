@@ -1,0 +1,33 @@
+.main_container {
+  margin: 0 auto;
+  min-height: 100%;
+  background-color: #FBFBFB;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.main_content {
+  width: 76%;
+  padding-top: 36px;
+  min-height: 100vh;
+}
+
+a {
+  cursor: pointer;
+}
+
+.box_shadow {
+  background: #FFFFFF;
+  -webkit-box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.05);
+  border-radius: 3px;
+}
+
+@media only screen and (max-width: 980px) {
+  .main_content {
+    width: 90%;
+  }
+}
