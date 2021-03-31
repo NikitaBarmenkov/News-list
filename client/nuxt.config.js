@@ -1,4 +1,6 @@
 export default {
+  ssr: true,
+
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'client',
@@ -14,6 +16,8 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
     ],
   },
+
+  target: 'static',
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
@@ -44,7 +48,9 @@ export default {
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    baseURL: process.env.BASE_URL || 'https://news-list.azurewebsites.net',
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {

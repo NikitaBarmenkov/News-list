@@ -1,23 +1,24 @@
-const spdy = require('spdy');
 const express = require('express');
 const path = require('path');
-const fs = require('fs');
 const cors = require('cors');
+const compression = require('compression');
 const router = require('./router');
 const errorHandler = require('./errorMiddeware/errorHandler');
 
-const port = 3001;
+const port = process.env.PORT || 3001;
 
 const app = express();
+app.use(compression());
 app.use(cors());
 app.use(express.json());
 app.use('/api', router);
 
-app.use(errorHandler);
+app.use(express.static(path.resolve(__dirname, '../static')));
 
-spdy
-  .createServer({
-    key: fs.readFileSync(path.resolve(__dirname, '../keys/key.key')),
-    cert: fs.readFileSync(path.resolve(__dirname, '../keys/certificate.crt')),
-  }, app)
-  .listen(port);
+app.get('/', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../static/index.html'));
+});
+
+app.use('/hell', errorHandler);
+
+app.listen(port);

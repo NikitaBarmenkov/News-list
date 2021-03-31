@@ -1,4 +1,4 @@
-function handle(err, req, res) {
+function handle(err, req, res, next) {
   if (err.status !== 500) {
     res.status(err.status);
     res.json({
@@ -12,6 +12,8 @@ function handle(err, req, res) {
     status: 500,
     message: 'Something went wrong',
   });
+
+  next(err);
 }
 
 module.exports = handle;

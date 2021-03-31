@@ -2,7 +2,7 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
     "lint": "eslint ./src",
@@ -17,12 +17,11 @@
     "eslint-plugin-import": "^2.22.1"
   },
   "dependencies": {
+    "compression": "^1.7.4",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "fs": "0.0.1-security",
     "node-fetch": "^2.6.1",
     "path": "^0.12.7",
-    "spdy": "^4.0.2",
     "xml2json": "^0.12.0"
   }
 }

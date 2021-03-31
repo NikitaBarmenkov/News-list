@@ -102,7 +102,7 @@ export default Vue.extend({
       this.serverRequest();
     },
     navigateRight() {
-      if (this.options.page + 1 > this.max) { 
+      if (this.options.page + 1 > this.max) {
         this.options.page = this.max;
         return;
       }
@@ -132,7 +132,7 @@ export default Vue.extend({
       this.serverRequest();
     },
     async serverRequest() {
-      const response = await this.$axios.$post('https://localhost:3001/api/news', this.options);
+      const response = await this.$axios.$post('/api/news', this.options);
       this.news = response.data;
       this.max = response.pages;
     },
